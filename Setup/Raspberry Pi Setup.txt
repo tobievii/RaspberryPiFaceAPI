@@ -1,0 +1,65 @@
+# after installing the OS, update the applications
+# from a Terminal
+sudo apt-get update
+sudo apt-get upgrade
+
+
+# -----------------
+# Setting up the Grove PI
+# https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/ 
+# -----------------
+
+# from a Terminal prompt
+sudo curl -kL dexterindustries.com/update_grovepi | bash 
+sudo reboot 
+
+# Run from Python
+/home/pi/Dexter/GrovePi/Software/Python/setup.py 
+
+
+# -----------------
+# Setting up the camera
+# https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera
+# -----------------
+
+
+
+# -----------------
+# Setting up Azure for SQL Azure storage
+# http://mdupont.com/Blog/Raspberry-Pi/azure-python3.html 
+# -----------------
+
+sudo apt-get install python-dev python3-dev python3-setuptools python3-pip 
+sudo apt-get install libffi-dev 
+sudo pip3 install azure 
+sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc 
+
+# ----------------- 
+# edit the config 
+# ----------------- 
+sudo nano /etc/freetds/freetds.conf 
+
+# put this text in the file
+[lightningtalk] 
+        host=lightningtalk.database.windows.net 
+        port=1433 
+        tds version = 8.0 
+
+# ----------------- 
+# find the driver 
+# ----------------- 
+sudo find / -name libtdsodbc.so 
+sudo find / -name libtdsS.so 
+(should be /usr/lib/arm-linux-gnueabihf/odbc/libtdsodbc.so) 
+
+# ----------------- 
+# edit ODBCinst.ini 
+# ----------------- 
+sudo nano /etc/odbcinst.ini 
+
+# put this text in the file
+[FreeTDS] 
+Description = TDS Driver (Sybase/MS SQL) 
+Driver = /usr/lib/arm-linux-gnueabihf/odbc/libtdsodbc.so 
+Setup = /usr/lib/arm-linux-gnueabihf/odbc/libtdsS.so 
+CPTimeout = 
