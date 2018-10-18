@@ -15,12 +15,19 @@ image_folder = r"/home/pi/Pictures/AddUser"
 person_group_id = "mygroup"
 counter = 5
 
-person_name = input("Enter the person's name:")
-person_deets = person_name + " " + time.strftime("%Y%m%d_%H%M%S")
+# -------------------------------------------
+# Delete previous files
+# -------------------------------------------
+filelist = os.listdir(image_folder)
+
+for file in filelist:
+    os.remove(image_folder + "/" + file)
 
 # -------------------------------------------
 # Get the persons name via input and add to the database
 # -------------------------------------------
+person_name = input("Enter the person's name:")
+person_deets = person_name + " " + time.strftime("%Y%m%d_%H%M%S")
 print("Adding person:",person_name)
 person_add = faceapi.person_create(person_group_id, person_name, person_deets)
 person_id = json.loads(person_add.decode("utf-8"))["personId"]
@@ -39,6 +46,9 @@ while counter >= 0:
 counter = 1    
 camera = picamera.PiCamera()
 
+camera.start_preview()
+time.sleep(2)
+
 # -------------------------------------------
 # Take 5 photos with two seconds gap in between each one
 # -------------------------------------------
@@ -50,7 +60,8 @@ while counter <= 5:
     print("captured image",counter,"of 5")
     counter +=1
     time.sleep(2)
-    
+
+camera.stop_preview()    
 camera.close()
 
 # -------------------------------------------
@@ -66,5 +77,9 @@ for file in filelist:
     person_face_id = faceapi.person_face_add(person_group_id, person_id, add_file_name)
     print("Added:",file)
 
+print("Training the group")
+faceapi.group_train(person_group_id)
+
+print("-----------")
 print("Done! Welcome",person_name,"!")
-    
+print("-----------")

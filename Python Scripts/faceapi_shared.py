@@ -7,11 +7,20 @@ import pyodbc
 import picamera
 #import time
 
-subscription_key = "[subscription_key]"
+# ------------------------------------------------------
+# Passwords, config
+# ------------------------------------------------------
+subscription_key = "YOURSUBSCRIPTION_KEY"
 endpoint_mscs = "northeurope.api.cognitive.microsoft.com"
-blob_account_name = '[account_name]'
-blob_account_key = '[account_key]'
-blob_container_name = '[container_name]'
+azure_blob_account_key = 'YOUR_ACCOUNT_KEY'
+azure_blob_account = 'YOUR_BLOB_ACCOUNT'
+azure_blob_container = 'YOUR_BLOB_CONTAINER'
+dsn = 'YOUR_DSN' 
+username = 'YOURUSER@DSERVER' 
+password = 'YOUR_STRONG_PASSWORD' 
+database = 'YOUR_DATABASE'
+connection_string = 'DSN={0};UID={1};PWD={2};DATABASE={3};'.format(dsn,username,password,database)
+
 
 def group_train(person_group_id):
     
@@ -116,7 +125,7 @@ def person_face_detect(file_location):
     params = urllib.parse.urlencode({
         'returnFaceId': 'true',
         'returnFaceLandmarks': 'false',
-        'returnFaceAttributes': 'age,gender,emotion',
+        'returnFaceAttributes': 'age,gender,emotion,facialHair,glasses,blur',
     })
 
 
@@ -268,13 +277,8 @@ def person_group_get(person_group_id):
 def capture_image(file_name):
     camera = picamera.PiCamera()
     camera.resolution = (1200, 1200)
-    #camera.start_preview()
     camera.capture(file_name)
-    #time.sleep(2)
-    #camera.stop_preview()
     camera.close()
-
-
 
 # ---------------------------------------------
 # Readable print of JSON
@@ -291,9 +295,9 @@ def json_print(json_text):
 
 # - this is specific to the Azure blob created for the demo
 def copy_to_blob (file_long_name, file_name):
-    block_blob_service = BlockBlobService(account_name=blob_account_name, account_key=blob_account_key)
+    block_blob_service = BlockBlobService(account_name=azure_blob_account, account_key=azure_blob_account_key)
     block_blob_service.create_blob_from_path(
-        blob_container_name,
+        azure_blob_container,
         file_name,
         file_long_name,
         content_settings=ContentSettings(content_type='image/png')
@@ -304,13 +308,6 @@ def copy_to_blob (file_long_name, file_name):
 # ---------------------------------------------
 
 def insert_to_sql (tsql):
-
-    dsn = '[DSN_NAME]' 
-    username = '[username@database]' 
-    password = '[password]' 
-    database = '[database]'
-    connection_string = 'DSN={0};UID={1};PWD={2};DATABASE={3};'.format(dsn,username,password,database)
-
     cnxn = pyodbc.connect(connection_string)
     cursor = cnxn.cursor()
     cursor.execute(tsql)

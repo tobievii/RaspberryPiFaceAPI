@@ -1,3 +1,14 @@
+# -----------------
+# Setting up the Raspberry P{i Operation System
+# https://www.raspberrypi.org/downloads/noobs/ 
+# -----------------
+
+The NOOBS (New Out Of The Box Software) can be obtained directly from Raspberry Pi website. 
+I suggest grabbing NOOBS LITE. There are simple setup instructions on the site.
+When you first boot your Raspberry Pi with this, you're asked which OS you want, I chose Raspbian
+
+
+
 # after installing the OS, update the applications
 # from a Terminal
 sudo apt-get update
@@ -34,9 +45,7 @@ sudo apt-get install libffi-dev
 sudo pip3 install azure 
 sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc 
 
-# ----------------- 
 # edit the config 
-# ----------------- 
 sudo nano /etc/freetds/freetds.conf 
 
 # put this text in the file
@@ -45,16 +54,12 @@ sudo nano /etc/freetds/freetds.conf
         port=1433 
         tds version = 8.0 
 
-# ----------------- 
 # find the driver 
-# ----------------- 
 sudo find / -name libtdsodbc.so 
 sudo find / -name libtdsS.so 
 (should be /usr/lib/arm-linux-gnueabihf/odbc/libtdsodbc.so) 
 
-# ----------------- 
 # edit ODBCinst.ini 
-# ----------------- 
 sudo nano /etc/odbcinst.ini 
 
 # put this text in the file
@@ -63,3 +68,10 @@ Description = TDS Driver (Sybase/MS SQL)
 Driver = /usr/lib/arm-linux-gnueabihf/odbc/libtdsodbc.so 
 Setup = /usr/lib/arm-linux-gnueabihf/odbc/libtdsS.so 
 CPTimeout = 
+
+# ----------------- 
+# Setting up Open CV (for drawing the rectangles)
+# this one is about 2-3 hours effort!
+# ----------------- 
+
+
