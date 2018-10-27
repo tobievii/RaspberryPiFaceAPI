@@ -4,7 +4,7 @@
 # -----------------
 
 The NOOBS (New Out Of The Box Software) can be obtained directly from Raspberry Pi website. 
-I suggest grabbing NOOBS LITE. There are simple setup instructions on the site.
+I suggest grabbing NOOBS, not NOOBS LITE. There are simple setup instructions on the site.
 When you first boot your Raspberry Pi with this, you're asked which OS you want, I chose Raspbian
 
 
