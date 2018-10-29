@@ -25,6 +25,7 @@ sudo curl -kL dexterindustries.com/update_grovepi | bash
 sudo reboot 
 
 # Run from Python
+# this can take a while, around an hour
 /home/pi/Dexter/GrovePi/Software/Python/setup.py 
 
 
@@ -42,6 +43,7 @@ sudo reboot
 
 sudo apt-get install python-dev python3-dev python3-setuptools python3-pip 
 sudo apt-get install libffi-dev 
+sudo reboot
 sudo pip3 install azure 
 sudo apt-get install unixodbc unixodbc-dev freetds-dev freetds-bin tdsodbc 
 
