@@ -76,4 +76,5 @@ CPTimeout =
 # this one is about 2-3 hours effort!
 # ----------------- 
 
+http://life2coding.com/install-opencv-3-4-0-python-3-raspberry-pi-3
 
