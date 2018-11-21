@@ -1,5 +1,24 @@
 # -----------------
-# Setting up the Raspberry P{i Operation System
+# ITEM 1
+# Equipment
+# -----------------
+
+1. A raspberry Pi kit: the Pi, Power Supply, SD card with OS installed
+2. A Grove Pi kit: the relevant Grove Pi setup completed
+
+Equipment
+WARNING: the lastest Raspberry Pi (3 Model B+) is a 64-bit processor. The Operating system used in this solution is not compatible with 64-bit. It is aimed around an ARM processor.
+
+Example Raspberry Pi kit from Amazon:
+https://www.amazon.co.uk/Raspberry-Pi-Official-Desktop-Starter/dp/B01CI58722/
+
+Example Grove Pi kit from Amazon:
+https://www.amazon.co.uk/Seeedstudio-Raspberry-certified-Temperature-UItrasonic/dp/B01AFKPQOY/
+
+
+# -----------------
+# ITEM 2
+# Setting up the Raspberry Pi Operation System
 # https://www.raspberrypi.org/downloads/noobs/ 
 # -----------------
 
@@ -16,8 +35,10 @@ sudo apt-get upgrade
 
 
 # -----------------
+# ITEM 3
 # Setting up the Grove PI
 # https://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/ 
+# NOTE: this takes a while to complete. From memory 1-2 hours
 # -----------------
 
 # from a Terminal prompt
@@ -30,13 +51,14 @@ sudo reboot
 
 
 # -----------------
+# ITEM 4
 # Setting up the camera
 # https://thepihut.com/blogs/raspberry-pi-tutorials/16021420-how-to-install-use-the-raspberry-pi-camera
 # -----------------
 
 
-
 # -----------------
+# ITEM 5
 # Setting up Azure for SQL Azure storage
 # http://mdupont.com/Blog/Raspberry-Pi/azure-python3.html 
 # -----------------
@@ -72,8 +94,9 @@ Setup = /usr/lib/arm-linux-gnueabihf/odbc/libtdsS.so
 CPTimeout = 
 
 # ----------------- 
+# ITEM 6
 # Setting up Open CV (for drawing the rectangles)
-# this one is about 2-3 hours effort!
+# NOTE: this one is about 2-3 hours effort!
 # ----------------- 
 
 http://life2coding.com/install-opencv-3-4-0-python-3-raspberry-pi-3
