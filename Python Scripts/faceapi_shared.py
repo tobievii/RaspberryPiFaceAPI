@@ -7,23 +7,20 @@ import pyodbc
 import picamera
 #import time
 
-# ------------------------------------------------------
-# Passwords, config
-# ------------------------------------------------------
-subscription_key = "YOURSUBSCRIPTION_KEY"
+subscription_key = "[subscription_key]" # your subscription key
 endpoint_mscs = "northeurope.api.cognitive.microsoft.com"
 azure_blob_account_key = 'YOUR_ACCOUNT_KEY'
 azure_blob_account = 'YOUR_BLOB_ACCOUNT'
 azure_blob_container = 'YOUR_BLOB_CONTAINER'
-dsn = 'YOUR_DSN' 
-username = 'YOURUSER@DSERVER' 
-password = 'YOUR_STRONG_PASSWORD' 
+dsn = 'YOUR_DSN'
+username = 'YOURUSER@DSERVER'
+password = 'YOUR_STRONG_PASSWORD'
 database = 'YOUR_DATABASE'
 connection_string = 'DSN={0};UID={1};PWD={2};DATABASE={3};'.format(dsn,username,password,database)
 
 
 def group_train(person_group_id):
-    
+
     headers = {'Ocp-Apim-Subscription-Key': subscription_key,}
 
     try:
@@ -39,7 +36,7 @@ def group_train(person_group_id):
 
 
 def person_create(person_group_id, person_name, user_data):
-    
+
     headers = {
         'Ocp-Apim-Subscription-Key': subscription_key,
     }
@@ -77,7 +74,7 @@ def person_get(person_group_id, person_id):
 
 # deletes ther person from the group
 def person_delete(person_group_id, person_id):
-    
+
     headers = {
         'Ocp-Apim-Subscription-Key': subscription_key,
         }
@@ -137,7 +134,7 @@ def person_face_detect(file_location):
         response = conn.getresponse()
         data = response.read()
         conn.close()
-        
+
         #print(data)
         return(data)
     except Exception as e:
@@ -158,7 +155,7 @@ def face_identify(person_group_id,face_id):
     "maxNumOfCandidatesReturned" : 1,
     "confidenceThreshold" : 0.5,
     },indent=2)
-    
+
     try:
         conn = http.client.HTTPSConnection(endpoint_mscs)
         conn.request("POST", "/face/v1.0/identify", body, headers)
@@ -188,7 +185,7 @@ def group_create(person_group_id, name, user_data):
     "name": name,
     "userData" : user_data,
     },indent=2)
-    
+
     try:
         conn = http.client.HTTPSConnection(endpoint_mscs)
         conn.request("PUT", "/face/v1.0/persongroups/{0}?%s".format(person_group_id) % params, body, headers)
@@ -211,7 +208,7 @@ def group_delete(person_group_id):
         # Request parameters
         'personGroupId': person_group_id,
     })
- 
+
     try:
         conn = http.client.HTTPSConnection(endpoint_mscs)
         conn.request("DELETE", "/face/v1.0/persongroups/{0}".format(person_group_id), None, headers)
@@ -313,6 +310,3 @@ def insert_to_sql (tsql):
     cursor.execute(tsql)
     cnxn.commit()
     cnxn.close()
-
-
-
