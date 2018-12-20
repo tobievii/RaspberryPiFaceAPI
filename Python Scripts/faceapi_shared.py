@@ -7,7 +7,7 @@ import pyodbc
 import picamera
 #import time
 
-subscription_key = "[subscription_key]"
+subscription_key = "[subscription_key]" # your subscription key
 endpoint_mscs = "northeurope.api.cognitive.microsoft.com"
 blob_account_name = '[account_name]'
 blob_account_key = '[account_key]'
