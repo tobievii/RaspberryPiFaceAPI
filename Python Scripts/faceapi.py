@@ -26,6 +26,12 @@ sql_password = config.get('faceapi','sql_password')
 sql_database = config.get('faceapi','sql_database')
 connection_string = 'DSN={0};UID={1};PWD={2};DATABASE={3};'.format(sql_dsn,sql_username,sql_password,sql_database)
 
+# custom vision variables
+prediction_key = config.get('custom_vision','prediction_key')
+project_id = config.get('custom_vision','project_id')
+iteration_id = config.get('custom_vision','iteration_id')
+endpoint_mscv = config.get('custom_vision','endpoint_mscv')
+
 # ---------------------------------------------
 # Capture an image
 # ---------------------------------------------
@@ -331,6 +337,33 @@ def person_group_get(person_group_id):
         return(data)
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+# ---------------------------------------------------
+# Custom Vision hec for mouse
+# ---------------------------------------------------
+
+def custom_vision_mouse(image_file):
+    
+    headers = {
+        'Prediction-Key': prediction_key,
+        'Content-Type':'application/octet-stream',
+    }
+
+    params = urllib.parse.urlencode({
+        'iterationId':iteration_id,
+    })
+
+    with open(image_file, mode='rb') as file:
+        fileContent = file.read()    
+    try:
+        conn = http.client.HTTPSConnection(endpoint_mscv)
+        conn.request('POST', '/customvision/v2.0/Prediction/{0}/image?%s'.format(project_id) % params, fileContent, headers)
+        response = conn.getresponse()
+        data = response.read()
+        return(data)
+        conn.close()
+    except Exception as e:
+        return("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
 

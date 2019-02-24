@@ -26,6 +26,7 @@ grovepi.pinMode(button,"INPUT")
 # set local variables
 # -------------------------------------------
 face_identity_count = 0
+mouse_detect = False
 program_version = '2.0.1'
 boxcolour = (255,255,255)
 
@@ -157,11 +158,29 @@ while True:
             visit_tsql = "insert rpi.Visit (VisitGUID,VisitDateTime,ProgramVersion,VisitImageURL,FaceCount) values ('{0}', '{1}', '{2}', '{3}', {4})".format(visit_id, visit_datetime, program_version, detect_image_url,face_identity_count)
             faceapi.insert_to_sql(visit_tsql)
 
+            # --------------------------------------------
+            # Detect the mouse with Custom Vision
+            # --------------------------------------------
+
+            json_out_cv = faceapi.custom_vision_mouse(camera_image_full_name)
+            json_py_cv = json.loads(json_out_cv.decode("utf-8"))
+
+            for x in json_py_cv["predictions"]:
+                if x["probability"] > 0.85:
+                    mouse_detect = True
+
+            #print(json_py_cv)
+            
+            #print(json.dumps(json.loads(json_out_cv.decode("utf-8")),indent=2))
+        
             # -------------------------------------------
             # Save the rectangle image, write to blob & output text to screen
             # -------------------------------------------
             print("------------------------")
             
+            if mouse_detect:
+                print("Hey I see the mouse!")
+               
             if face_identity_count > 0:
                 cv2.imwrite(detect_image_full_name,detect_image_read)
                 faceapi.copy_to_blob (detect_image_full_name, detect_image_file_name)
@@ -181,6 +200,8 @@ while True:
             # Finished processing the image, return to monitoring
             # ----------------------------------------
             face_identity_count = 0
+            mouse_detected = False
+            mouse_confidence = 0
             #print(screen_message)
             print("Done. Back to monitoring mode...")
                 
