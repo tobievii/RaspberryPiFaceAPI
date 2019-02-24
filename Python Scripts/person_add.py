@@ -7,6 +7,7 @@ import datetime
 import time
 import os, json, sys
 import faceapi
+from configparser import SafeConfigParser
 
 # -------------------------------------------
 # local variables
