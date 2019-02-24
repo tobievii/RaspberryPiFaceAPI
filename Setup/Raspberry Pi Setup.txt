@@ -27,8 +27,7 @@ I suggest grabbing NOOBS, not NOOBS LITE. There are simple setup instructions on
 When you first boot your Raspberry Pi with this, you're asked which OS you want, I chose Raspbian
 
 
-
-# after installing the OS, update the applications
+# after installing the OS, perform the updates
 # from a Terminal
 sudo apt-get update
 sudo apt-get upgrade
@@ -59,7 +58,7 @@ sudo reboot
 
 # -----------------
 # ITEM 5
-# Setting up Azure for SQL Azure storage
+# Setting up Azure for SQL Database & storage
 # http://mdupont.com/Blog/Raspberry-Pi/azure-python3.html 
 # -----------------
 
@@ -74,7 +73,7 @@ sudo nano /etc/freetds/freetds.conf
 
 # put this text in the file
 [lightningtalk] 
-        host=lightningtalk.database.windows.net 
+        host=yourdatabase.database.windows.net 
         port=1433 
         tds version = 8.0 
 
@@ -100,4 +99,15 @@ CPTimeout =
 # ----------------- 
 
 http://life2coding.com/install-opencv-3-4-0-python-3-raspberry-pi-3
+
+# ----------------- 
+# ITEM 7
+# Setting up GIT and cloning my repsoitory
+# ----------------- 
+I cloned verything to /pi/GIT. 
+- First create the folder called GIT
+- In a terminal change to the GIT folder, "cd GIT"
+- git clone https://github.com/datalineo/RaspberryPiFaceAPI.git
+
+- make sure you update the config file to match your settings
 
