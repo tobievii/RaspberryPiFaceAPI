@@ -73,7 +73,7 @@ while True:
             # -------------------------------------------
             # Send the image to Microsoft Face API to Detect
             # -------------------------------------------
-            print("Performing Facial recognition...")
+            print("Performing Facial recognition & Custom Vision...")
             detect_json = faceapi.person_face_detect(camera_image_full_name)
             #print(detect_json)
             detect_py = json.loads(detect_json.decode("utf-8"))
@@ -180,9 +180,9 @@ while True:
 
 
             if mouse_confidence > 0.85:
-                print('Hey I\'m pretty confident I can see the mouse!')
+                print('** I SEE THE MOUSE!! ** Hey I\'m pretty confident I can see the mouse!')
             elif mouse_confidence > 0.65:
-                print('Mouse-wise, I\'m marginally confident I can see it there!')
+                print('** I SEE THE MOUSE!! ** I\'m marginally confident I can see it there!')
             #elif mouse_confidence > 0.5:
             #    print('I can see something that could be the mouse, no overly confident though')
             #elif mouse_confidence > 0.3:
