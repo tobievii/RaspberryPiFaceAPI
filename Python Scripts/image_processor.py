@@ -26,7 +26,7 @@ grovepi.pinMode(button,"INPUT")
 # set local variables
 # -------------------------------------------
 face_identity_count = 0
-mouse_detect = False
+mouse_confidence = 0
 program_version = '2.0.1'
 boxcolour = (255,255,255)
 
@@ -166,8 +166,8 @@ while True:
             json_py_cv = json.loads(json_out_cv.decode("utf-8"))
 
             for x in json_py_cv["predictions"]:
-                if x["probability"] > 0.85:
-                    mouse_detect = True
+                if x["probability"] > mouse_confidence:
+                    mouse_confidence = x["probability"]
 
             #print(json_py_cv)
             
@@ -177,9 +177,17 @@ while True:
             # Save the rectangle image, write to blob & output text to screen
             # -------------------------------------------
             print("------------------------")
-            
-            if mouse_detect:
-                print("Hey I see the mouse!")
+
+
+            if mouse_confidence > 0.85:
+                print('Hey I\'m pretty confident I can see the mouse!')
+            elif mouse_confidence > 0.65:
+                print('Mouse-wise, I\'m marginally confident I can see it there!')
+            #elif mouse_confidence > 0.5:
+            #    print('I can see something that could be the mouse, no overly confident though')
+            #elif mouse_confidence > 0.3:
+            #    print('I\'m squinting, something looks mousey, but hard to tell')
+
                
             if face_identity_count > 0:
                 cv2.imwrite(detect_image_full_name,detect_image_read)
@@ -200,7 +208,6 @@ while True:
             # Finished processing the image, return to monitoring
             # ----------------------------------------
             face_identity_count = 0
-            mouse_detected = False
             mouse_confidence = 0
             #print(screen_message)
             print("Done. Back to monitoring mode...")
